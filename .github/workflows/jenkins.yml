@@ -11,12 +11,12 @@ jobs:
     steps:
     - name: Retrieve Jenkins Crumb
       run: |
-       CRUMB=$(curl -u "$JENKINS_USER:$JENKINS_API_TOKEN" -s 'http://172-31-18-171:8080/crumbIssuer/api/json' | jq -r '.crumb')
+       CRUMB=$(curl -u "$JENKINS_USER:$JENKINS_API_TOKEN" -s 'http://172.31.18.171:8080/crumbIssuer/api/json' | jq -r '.crumb')
        echo "CRUMB=$CRUMB" >> $GITHUB_ENV
 
     - name: Trigger Jenkins Job
       run: |
-       curl -X POST "http://172-31-18-171:8080/job/hello-world-web/build?token=mysecret" \
+       curl -X POST "http://172.31.18.171:8080/job/hello-world-web/build?token=mysecret" \
            -u "$JENKINS_USER:$JENKINS_API_TOKEN" \
            -H "Jenkins-Crumb:$CRUMB"
     env:
